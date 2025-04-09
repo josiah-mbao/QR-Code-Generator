@@ -80,13 +80,14 @@
 <body>
 
 <header>
-    <h1>QR Code Ticket Generator</h1>
+    <h1>Smart Tickets</h1>
 </header>
 
 <div class="container">
-    <h2>Team George</h2>
+    <h2>Get your ticket</h2>
     <div class="form-container">
         <h2>Enter Your Email and Ticket Info</h2>
+        <p><a href="/view_qr_codes">View All Generated QR Codes</a></p>
         <form id="qrForm">
             <input type="email" id="email" placeholder="Enter your email" required>
             <input type="text" id="ticketInfo" placeholder="Enter your ticket info (text to be encoded in the QR code)" required>
@@ -102,7 +103,6 @@
         <p id="responseMessage" class="message"></p>
         <p id="errorMessage" class="error"></p>
     </div>
-    <p>Disclaimer: I'm not a designer 🤷🏾‍♂️</p>
 </div>
 
 <script>

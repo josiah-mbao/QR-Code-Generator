@@ -105,6 +105,10 @@ def index():
     return render_template('index.html')
 
 
+# Global list to store QR code URLs (for simplicity, using in-memory storage)
+qr_code_urls = []
+
+
 @app.route("/send_qr", methods=["POST"])
 def send_qr():
     print("[INFO] /send_qr endpoint hit.")
@@ -131,6 +135,10 @@ def send_qr():
         if not qr_url:
             print("[ERROR] QR code generation failed.")
             return jsonify({"error": "QR code generation failed"}), 500
+        
+        # Store the QR code URL
+        qr_code_urls.append((qr_url, ticket_data))
+        print(f"[INFO] QR code URL stored: {qr_url}")
 
         print("[INFO] Sending email with QR code...")
         if send_email(user_email, "Your Event Ticket",
@@ -146,7 +154,18 @@ def send_qr():
     except Exception as e:
         print(f"[ERROR] Unexpected error in /send_qr: {e}")
         return jsonify({"error": str(e)}), 500
+    
+    
+@app.route("/view_qr_codes")
+def view_qr_codes():
+    print("[INFO] /view_qr_codes endpoint hit.")
+    return render_template('view_qr_codes.html', qr_codes=qr_code_urls)
 
+
+@app.route("/test")
+def test():
+    print("[INFO] /test endpoint hit.")
+    return render_template('test.html')
 
 if __name__ == "__main__":
     print("[INFO] Starting Flask application...")
